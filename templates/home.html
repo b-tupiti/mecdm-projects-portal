@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-light p-5 border text-center "> 
+    <h3 class="lead ">Welcome to <span class="fw-bold"> MECDM Projects</span> </h3> 
+    {% if request.user.is_authenticated %}
+       <p class="text-secondary p-5">You are signed in my guy!</p>
+    {% else %}
+    <p class="text-secondary p-5"> Log in to register as a stakeholder on available climate projects. <br> If you do not have an account, request for one.</p>
+    {% endif %}
+    
+</div>
+{% endblock %}

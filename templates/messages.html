@@ -1,0 +1,28 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'users/main.css' %}"></link>
+
+<div class="container">
+  {% if messages %} {% for message in messages %}
+  <div
+    class=" alert alert-dismissible fade show message d-flex justify-content-between alert--{{message.tags}}"
+    role="alert"
+  >
+    
+    <div class="p-1 offset-2">
+      <small class="text-light">{{message}}</small>
+    </div>
+
+    <div class="">
+      <button
+        type="button"
+        class="btn btn-sm shadow-none text-light"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      >
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+  </div>
+
+  {% endfor %} {% endif %}
+</div>

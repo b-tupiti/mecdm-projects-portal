@@ -1,0 +1,99 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="bg-light">
+  {% if page == 'login' %}
+
+  <form
+    class="p-4 pt-2 bg-light border ms-auto"
+    style="width: 800px; right: 0px"
+    method="post"
+  >
+    {% csrf_token %}
+
+    <h6 class="text-gray p-2 mb-3 lead">Login to your account</h6>
+
+    <div class="mb-3 row">
+      <label class="col-sm-2 col-form-label fw-bold text-secondary"
+        >Username:
+      </label>
+      <div class="col-sm-10">
+        <input
+          class="form-control shadow-none rounded-1 border-0 border-secondary"
+          type="text"
+          name="username"
+          id=""
+        />
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label class="col-sm-2 col-form-label fw-bold text-secondary"
+        >Password:
+      </label>
+      <div class="col-sm-10">
+        <input
+          class="form-control shadow-none rounded-1 border-0 border-secondary"
+          type="password"
+          name="password"
+          id=""
+        />
+      </div>
+    </div>
+
+    <div class="text-end d-flex flex-row-reverse">
+      <button
+        type="submit"
+        class="btn btn-sm text-white ps-4 pe-4 pt-2 pb-2 fw-bold me-3"
+        style="height: fit-content; background: #404850"
+        style="width: 3.5rem"
+      >
+        Login
+      </button>
+    </div>
+    <p class="text-end mt-3 pe-4">
+      <small>
+        Do not have an account?
+        <a class="ms-3" href="{% url 'request-an-account' %}"
+          >Request an account</a
+        >
+      </small>
+    </p>
+  </form>
+
+  {% elif page == 'request' %}
+
+  <form
+    class="p-4 pt-2 bg-light shadow-sm ms-auto"
+    style="width: 800px; right: 0px"
+    method="post"
+  >
+    {% csrf_token %}
+    <h6 class="text-gray p-2 mb-3  fw-bold">Request for an account</h6>
+
+    {% for field in form %} {{field}} {% endfor %}
+
+    <div class="d-flex  justify-content-between mt-3 align-items-center">
+      <div class="align-self-center">
+      <p class="">
+        <small>
+          Have account already?
+          <a class="ms-3" href="{% url 'login' %}">Login</a>
+        </small>
+      </p>
+    </div>
+
+      <button
+        type="submit"
+        class="btn btn-sm text-white ps-4 pe-4 pt-2 pb-2 fw-bold me-1"
+        style="height: fit-content; background: #404850"
+        style="width: 3.5rem"
+      >
+        Submit Request
+      </button>
+    </div>
+  </form>
+
+  {% endif %}
+</div>
+
+{% endblock content %}

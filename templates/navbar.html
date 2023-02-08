@@ -1,0 +1,75 @@
+<nav class="navbar navbar-expand-lg bg-dark shadow-sm " data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}">MECDM </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Resources</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ">Reports</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ">Register as a climate stakeholder</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ms-auto rounded-1 ps-2 pe-2" style="background:#7e949b">
+
+            {% if user.is_authenticated %}
+
+                {% if is_admin %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account-requests' %}"> Account Requests ({{ total_requests }})</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users' %}">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Projects</a>
+                </li>
+                {% endif %}
+
+                
+
+              
+
+               
+
+            {% endif %}
+         
+       
+        </ul>
+
+        <ul class="navbar-nav ms-auto">
+
+            {% if request.user.is_authenticated %}
+            <li class="nav-item me-3">
+                <div class="nav-link"> <small> welcome,  <span class="fw-bold">{{request.user.username}}</span> <i class="bi bi-person-circle"></i></small> </div>
+            </li>
+            <li class="nav-item">
+               
+                <a class="nav-sm-link btn  btn-secondary" href="{% url 'logout' %}">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item me-3">
+                <a class="nav-link" href="{% url 'request-an-account' %}"> <small>Request Account</small> </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-sm-link btn  btn-secondary" href="{% url 'login' %}">Login</a>
+            </li>
+            {% endif %}
+        </ul>
+
+      </div>
+    </div>
+  </nav>

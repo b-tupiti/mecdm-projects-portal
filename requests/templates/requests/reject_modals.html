@@ -1,0 +1,41 @@
+{% for request in requests %}
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="reject{{request.id}}"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Reject Request</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to reject 
+        <span class="fw-bold">{{request.email}}</span>'s request?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <form method="post" action="{% url 'account-request' request.id %}">
+            {% csrf_token %}
+            <button type="submit" name="choice" value="reject" class=" btn btn-sm btn-success"> <small>Yes, reject this!<i class="fa-regular fa-thumbs-up"></i></small> </button> 
+          </form>
+        {% comment %} <a href="{% url 'request-user' user.id %}" id="delete{{user.id}}" name="{{user.id}}"  class=" btn btn-primary" data-bs-dismiss="modal">Yes, Delete It!</a> {% endcomment %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endfor %}

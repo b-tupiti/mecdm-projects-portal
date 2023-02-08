@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="border  bg-light" style="min-height:600px">
+
+    {% comment %} NAVBAR requests {% endcomment %}
+    <nav
+  class="navbar navbar-expand-lg bg-body-secondary container border mt-2 mb-3"
+>
+  <div class="container-fluid">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+     
+     
+    </div>
+
+    <div class="text-secondary me-4">
+      <small class="">Requests:  </small>
+      <small class="fw-bold badge text-secondary ">{{total_requests}}</small>
+    </div>
+  </div>
+</nav>
+{% comment %} NAVBAR requests {% endcomment %}
+
+    {% if requests %}
+    
+    
+ 
+
+  <table class="table table-hover table-striped  table-sm container border mb-1">
+    <thead class="thead-light  " >
+      <tr >
+        <th scope="col">Username</th>
+        <th scope="col">Email</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Occupation</th>
+        <th scope="col">Organization</th>
+        <th scope="col">Reasons</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for request in requests %}
+      <tr>
+        <td>{{request.username}}</td>
+        <td>{{request.email}}</td>
+        <td>{{request.first_name}}</td>
+        <td>{{request.last_name}}</td>
+        <td>{{request.occupation}}</td>
+        <td>{{request.organization}}</td>
+        <td>{{request.reason_for_request}}</td>
+        
+        <td > 
+          <small> 
+            <form method="post" action="{% url 'account-request' request.id %}" class="d-inline-block">
+              {% csrf_token %}
+              <button type="submit" name="choice" value="accept" class=" btn btn-sm btn-success p-0 ps-2 pe-2"> <small>Accept<i class="fa-regular fa-thumbs-up"></i></small> </button> 
+            </form>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#reject{{request.id}}"  class=" btn btn-sm btn-danger p-0 ps-2 pe-2"> <small>Reject<i class="fa-regular fa-thumbs-down"></i></small></button> 
+          </small>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% include 'pagination.html' with queryset=requests custom_range=custom_range %}
+ 
+    {% else  %}
+
+    <h4 class="container p-2">There are no account creation requests.</h4>
+
+    {% endif %}
+
+
+</div>
+
+
+{% include 'requests\reject_modals.html' %}
+   
+{% endblock %}

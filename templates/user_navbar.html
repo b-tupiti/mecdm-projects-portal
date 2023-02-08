@@ -1,0 +1,44 @@
+<nav
+  class="navbar navbar-expand-lg bg-body-secondary container border mt-2 mb-3"
+>
+  <div class="container-fluid">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <button type="button" data-bs-toggle="modal" data-bs-target="#add-user"  class="btn btn-sm btn-secondary border-none rounded-0">Add User</button> 
+        </li>
+      </ul>
+      <form class="ms-4 d-flex" role="search">
+        <input
+          class="form-control shadow-none rounded-end-0 me-2"
+          name="search"
+          type="search"
+          placeholder="search user account..."
+          aria-label="Search"
+        />
+        <button
+          class="btn btn-sm btn-outline-success border-none"
+          type="submit"
+        >
+          <i class="bi bi-search"></i>
+        </button>
+      </form>
+    </div>
+
+    <div class="text-secondary me-4">
+      <small class="">total user accounts:  </small>
+      <small class="fw-bold badge text-secondary ">{{total_users}}</small>
+    </div>
+  </div>
+</nav>

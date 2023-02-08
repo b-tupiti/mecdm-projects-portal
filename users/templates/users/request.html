@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="border p-4">
+
+        <p>
+           <h5> {{account_request.email}} </h5>
+           <h6> {{account_request.username}} </h6>
+            <h6>{{ account_request.first_name }} {{ account.last_name }}</h6>
+            <h6>{{ account_request.occupation }}</h6>
+            <p>{{ account_request.reason_for_request }}</p>
+
+        </p>
+
+        <form class="border p-2" method="post">
+            {% csrf_token %}
+            <input
+          class="form-control shadow-none rounded-1 border-0 text-white border-secondary bg-success"
+          type="submit"
+          name="choice"
+          value="Accept"
+        />
+            <input
+          class="form-control shadow-none rounded-1 border-0 text-white border-secondary bg-danger"
+          type="submit"
+          name="choice"
+          value="Reject"
+        />
+        </form>
+        
+
+    </div>
+
+    
+
+    
+    
+{% endblock %}

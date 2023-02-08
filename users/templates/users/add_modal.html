@@ -1,0 +1,62 @@
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="add-user"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <form class="modal-content" method="post" action="{% url 'add-user'  %}">
+      {% csrf_token %}
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Account</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        
+        <div class=" mb-3">Add new account</div> <br>
+
+        
+        
+        {%for field in form %}
+
+        <div class="mb-3 row">
+          <label class="col-sm-3 col-form-label fw-bold text-secondary"
+            >{{field.label}} 
+          </label>
+          <div class="col-sm-9">
+            {{field}}
+          </div>
+        </div>
+
+        
+        {%endfor%}
+
+      
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        {% comment %} <a href="{% url 'edit-user' user.id %}" id="edit{{user_form.user.id}}" name="edit{{user_form.user.id}}"  class="edit-user btn btn-primary" data-bs-dismiss="modal">Yes, Edit It!</a> {% endcomment %}
+        <input type="submit"   class=" btn btn-primary" data-bs-dismiss="modal" value="Add account"/>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+
