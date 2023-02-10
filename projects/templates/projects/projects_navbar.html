@@ -1,7 +1,16 @@
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'projects/styles/main.css' %}"></link>
+
+
 <nav
-  class="navbar navbar-expand-lg bg-body-secondary container border mt-2 mb-3"
+  class="navbar navbar-expand-lg bg-white container border  mb-3  mt-3"
 >
-  <div class="container-fluid">
+
+
+
+  
     <button
       class="navbar-toggler"
       type="button"
@@ -13,32 +22,101 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <button type="button" data-bs-toggle="modal" data-bs-target="#add-project"  class="btn btn-sm btn-secondary border-none rounded-0">Add Project</button> 
-        </li>
-      </ul>
-      <form class="ms-4 d-flex" role="search">
-        <input
-          class="form-control shadow-none rounded-end-0 me-2"
-          name="search"
-          type="search"
-          placeholder="search for a project (name, description)..."
-          aria-label="Search"
-        />
-        <button
-          class="btn btn-sm btn-outline-success border-none"
-          type="submit"
-        >
-          <i class="bi bi-search"></i>
-        </button>
+
+
+    <div class="collapse navbar-collapse  p-1" id="navbarNav">
+      
+      
+      <form class="p-1">
+        <p> <span class="fw-bold me-2">Filters</span> <small class="text-mute fw-light">(Use the filter to narrow down your search for projects)</small></p>
+        <div class="row g-2">
+
+          <div class="col">
+            <div class="p-1"><small> Project Keywords</small></div>
+            <input  class="form-control form-control-sm rounded-end-0  border-0 border-bottom shadow-none" type="text" placeholder="title, description" >
+          </div>
+
+          <div class="col">
+            <div class="p-1"><small> Tags</small></div>
+            <input  class="form-control form-control-sm rounded-start-0 border-0 border-bottom shadow-none" type="text" placeholder="eg. complex" >
+          </div>
+        
+          {% if request.user.is_authenticated %}
+          <div class="col">
+            <div class="p-1"><small> Status</small></div>
+         <select class="form-select form-select-sm rounded-0 shadow-none " aria-label=".form-select-sm example">
+          <option selected ></option>
+        </select>
+         </div>
+         {% endif %}
+        
+        <div class="col">
+          <div class="p-1"><small> Status Category</small></div>
+        <select class="form-select form-select-sm rounded-0 shadow-none" aria-label=".form-select-sm example">
+          <option selected></option>
+        </select>
+      </div>
+
+      <div class="col">
+        <div class="p-1"><small> Donor</small></div>
+        <select class="form-select form-select-sm rounded-0 shadow-none" aria-label=".form-select-sm example">
+          <option selected></option>
+          {% for donor in search_filters.donors %}
+          <option>{{donor}}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="col">
+        <div class="p-1"><small> Implementor</small></div>
+        <select class="form-select form-select-sm rounded-0 shadow-none" aria-label=".form-select-sm example">
+          <option selected></option>
+          {% for implementor in search_filters.implementors %}
+          <option >{{implementor}}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="col">
+        <div class="p-1"><small> Partner</small></div>
+        <select class="form-select form-select-sm rounded-0 shadow-none" aria-label=".form-select-sm example">
+          <option selected></option>
+          {% for partner in search_filters.partners %}
+          <option >{{partner}}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+        <div class="col">
+          <div class="p-1"><small> Project Type</small></div>
+        <select class="form-select form-select-sm rounded-0 shadow-none" aria-label=".form-select-sm example">
+          <option selected></option>
+        </select>
+      </div>
+
+      <div class="col">
+        <div class="p-1"><small> Scope</small></div>
+        <select class="form-select form-select-sm rounded-0 shadow-none" aria-label=".form-select-sm example">
+          <option selected></option>
+      
+        </select>
+      </div>
+
+      <div class="col  position-relative">
+        
+        <button class="btn btn-sm btn-outline-success rounded-0 position-absolute bottom-0 end-0 me-2" type="submit" > <small><span class="me-2 ">Find <span class="fw-bold">projects </span></span><i class="bi bi-binoculars-fill"></i></small> </button>
+      </div>
+
+      </div>
       </form>
+
+      
+
+      
+      
+    
+
     </div>
 
-    <div class="text-secondary me-4">
-      <small class="">total projects:  </small>
-      <small class="fw-bold badge text-secondary ">{{total_projects}}</small>
-    </div>
-  </div>
+    
 </nav>

@@ -6,52 +6,130 @@
 {% block content %}
 
 <div class="border bg-light"  style="min-height:600px">
+
+
+ 
  
   {% include 'projects/projects_navbar.html' %}
 
   {% if projects %}
 
+    
+      
+      <div class="container d-flex justify-content-between list-unstyled border border-bottom-0 bg-white  p-3" >
+          
+        
 
-  <table class="table table-hover table-striped  table-sm container border mb-1">
+        <form class="d-inline-block p-0  m-0">
+             <select style="width:200px" class="h-100 d-inline-block form-select  rounded-0 shadow-none p-1 m-0" aria-label=".form-select-sm example">
+              <option selected></option>
+              <option >By Donor</option>
+              <option >By Status Category</option>
+              <option >By Implementing Agencies</option>
+            </select> 
+
+            <button class="h-100  btn btn-sm btn-outline-success rounded-0 m-0  " type="submit" > <small><span class="me-2 ">Generate <span class="fw-bold">Report </span></span><i class="bi bi-clipboard-data-fill"></i></small> </button>
+        </form>
+
+       
+      <form class="d-inline-block  p-0 m-0 ">
+       <button class="h-100 btn btn-sm btn-outline-success rounded-0 m-0" type="submit" > <small><span class="me-2 ">Export <span class="fw-bold">Data </span></span><i class="bi bi-file-earmark-excel-fill"></i></small> </button>
+       </form>
+
+  </div>
+
+
+  
+      
+
+
+
+
+
+  <div class="container bg-white p-2 border">
+  <table class="table table-hover table  table-sm  border ">
     <thead class="thead-light  " >
       <tr >
-        <th scope="col">Username</th>
-        <th scope="col">Email</th>
-        <th scope="col">First Name</th>
-        <th scope="col">Last Name</th>
-        <th scope="col">User Type</th>
+        <th scope="col"> ID</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Title</th>
+        {% if request.user.is_authenticated %}
+        <th scope="col">Project Status</th>
+        {% endif %}
+        <th scope="col">Status Category</th>
+        <th scope="col">Donors</th>
+        <th scope="col">Implementors</th>
+        <th scope="col">Partners</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
-      {% for user in users %}
+
+      {% for project in projects %}
+      
       <tr>
-        <td>{{user.username}}</td>
-        <td>{{user.email}}</td>
-        <td>{{user.first_name}}</td>
-        <td>{{user.last_name}}</td>
-        <td class="text-lowercase ">
-          {% if user.user_type == 'ADMIN' %}
-          <span class="badge bg-success">{{user.user_type}}</span>
-          {% else %}
-          <span class="badge text-secondary"> {{user.user_type}}</span>
+        <td><small>203294</small></td>
+        <td><small>{{project.created}}</small></td>
+        <td><small class=""><a href="#" class="text-decoration-none"> {{project.title}}</a></small></td>
+        {% if request.user.is_authenticated %}
+        <td><small>NDA Secretariet and CFSC preparing reccomendations in preparation of final decision</small></td>
+        {% endif %}
+        <td><small>Approved by Donor(s)</small></td>
+        
+        <td>
+          {%if project.donors.all %}
+          {%for  donor in project.donors.all %}
+          <small class="badge badge-sm bg-success">{{donor}}</small>
+          {% endfor %}
+          {%else%}
+          <small class="text-secondary fw-light text-italic">no donors</small>
           {% endif %}
         </td>
+
+        <td>
+          {%if project.implementors.all %}
+          {%for  implementor in project.implementors.all %}
+          <small class="badge badge-sm bg-success">{{implementor}}</small>
+          {% endfor %}
+          {%else%}
+          <small class="text-secondary fw-light text-italic">no implementors</small>
+          {% endif %}
+        </td>
+
+        <td>
+          {%if project.partners.all %}
+          {%for  partner in project.partners.all %}
+          <small class="badge badge-sm bg-success">{{partner}}</small>
+          {% endfor %}
+          {%else%}
+          <small class="text-secondary fw-light text-italic">no partners</small>
+          {% endif %}
+        </td>
+
+
+       
+        
         <td > 
-          <small> 
-            <button type="button" data-bs-toggle="modal" data-bs-target="#edit{{user.id}}"  class=" btn btn-sm p-0"><i class=" bi bi-pencil-square"></i></button> 
-            <button type="button" data-bs-toggle="modal" data-bs-target="#delete{{user.id}}"  class=" btn btn-sm p-0"><i class=" bi bi-trash3"></i></button> 
+          <small class="d-flex"> 
+            <button type="button" class=" btn btn-sm btn-outline-secondary p-2 pt-1 pb-1"> <i class="bi bi-eye"></i></button> 
+            <button type="button" class=" btn btn-sm btn-outline-secondary p-2 pt-1 pb-1"> <i class="bi bi-file-earmark-text"></i></button> 
           </small>
         </td>
       </tr>
+
       {% endfor %}
+     
     </tbody>
   </table>
-
+</div>
 
   {% else %}
-    <h5 class="container">There are no projects.</h5>
+
+  <div class="container border border-bottom-0 p-2 bg-white ">
+    <p>There are no projects available</p>
+  </div>
   {% endif %}
+
 
   {% include 'projects/add_modal.html' %}
 
