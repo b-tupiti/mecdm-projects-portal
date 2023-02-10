@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import  login_required
 from users.utils import isAdminUser
 from django.shortcuts import redirect
 from requests.models import AccountRequest
-from .models import Project
+from .models import *
 from entities.models import *
 
 def Projects(request):
@@ -17,6 +17,8 @@ def Projects(request):
         'donors' :  Donor.objects.all(),
         'implementors': Implementor.objects.all(),
         'partners': Partner.objects.all(),
+        'risks': Risk.objects.all(),
+        'types': ProjectType.objects.all(),
     }
     
     context = {

@@ -91,14 +91,19 @@
           <div class="p-1"><small> Project Type</small></div>
         <select class="form-select form-select-sm rounded-0 shadow-none" aria-label=".form-select-sm example">
           <option selected></option>
+          {% for type in search_filters.types %}
+          <option >{{type}}</option>
+          {% endfor %}
         </select>
       </div>
 
       <div class="col">
-        <div class="p-1"><small> Scope</small></div>
+        <div class="p-1"><small> Risk</small></div>
         <select class="form-select form-select-sm rounded-0 shadow-none" aria-label=".form-select-sm example">
           <option selected></option>
-      
+          {% for risk in search_filters.risks %}
+          <option >{{risk.description}}</option>
+          {% endfor %}
         </select>
       </div>
 
