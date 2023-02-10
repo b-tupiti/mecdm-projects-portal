@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'requests.apps.RequestsConfig',
     'projects.apps.ProjectsConfig',
+    'entities.apps.EntitiesConfig',
 ]
 
 MIDDLEWARE = [
