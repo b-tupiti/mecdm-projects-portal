@@ -9,11 +9,7 @@ def searchProjects(request):
     if request.GET.get('keywords'):
         keywords = request.GET.get('keywords')
         query.add(Q(title__icontains=keywords),Q.AND)
-            
-    tags = ''
-    if request.GET.get('tags'):
-        tags = request.GET.get('tags')
-        
+     
     selected_status = ''
     if request.GET.get('status'):
         selected_status = request.GET.get('status')
@@ -51,7 +47,22 @@ def searchProjects(request):
     if request.GET.get('risk'):
         selected_risk = request.GET.get('risk')
         query.add(Q(risk_rate__rate__icontains=selected_risk),Q.AND)
+    
+    projects = Project.objects.filter(query)
+    
+    tags = ''
+    if request.GET.get('tags'):
+        # split tags
+        tags = request.GET.get('tags').replace(" ","").split(',')
+        # filter first tag
+        projects = projects.filter(tags__in=Tag.objects.filter(name__icontains=tags[0]))
+        # chain consecutive tags in list
+        for tag in tags[1:]:
+            projects = projects.filter(tags__in=Tag.objects.filter(name__icontains=tag))
         
+        tags = ','.join(str(tag) for tag in tags)  
+
+   
     selected = {
         'keywords' : keywords,
         'tags' : tags,
@@ -63,8 +74,6 @@ def searchProjects(request):
         'selected_type': selected_type, 
         'selected_risk': selected_risk, 
     }
-    
-    projects = Project.objects.filter(query)
 
     return projects, selected
 

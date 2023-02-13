@@ -25,3 +25,7 @@ admin.site.register(Status, StatusAdmin)
 class StatusCategoryAdmin(admin.ModelAdmin):
     pass 
 admin.site.register(StatusCategory, StatusCategoryAdmin)
+
+class TagAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(Tag,TagAdmin)

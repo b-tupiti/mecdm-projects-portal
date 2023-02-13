@@ -50,8 +50,6 @@
   <table class="table table-hover table  table-sm  border ">
     <thead class="thead-light  " >
       <tr >
-        <th scope="col"> ID</th>
-        <th scope="col">Date Created</th>
         <th scope="col">Title</th>
         {% if request.user.is_authenticated %}
         <th scope="col">Project Status</th>
@@ -60,6 +58,7 @@
         <th scope="col">Donors</th>
         <th scope="col">Implementors</th>
         <th scope="col">Partners</th>
+        <th scope="col">Tags</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
@@ -68,8 +67,6 @@
       {% for project in projects %}
       
       <tr>
-        <td><small>203294</small></td>
-        <td><small>{{project.created}}</small></td>
         <td><small class=""><a href="#" class="text-decoration-none"> {{project.title}}</a></small></td>
         {% if request.user.is_authenticated %}
         <td><small>{{project.status}}</small></td>
@@ -105,6 +102,18 @@
           {% endfor %}
           {%else%}
           <small class="text-secondary fw-light text-italic">no partners</small>
+          {% endif %}
+        </td>
+
+
+
+        <td>
+          {%if project.tags.all %}
+          {%for  tag in project.tags.all %}
+          <small class="badge badge-sm bg-warning">{{tag}}</small>
+          {% endfor %}
+          {%else%}
+          <small class="text-secondary fw-light text-italic">no tags</small>
           {% endif %}
         </td>
 
