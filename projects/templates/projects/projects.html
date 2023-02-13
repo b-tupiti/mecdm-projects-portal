@@ -123,7 +123,10 @@
      
     </tbody>
   </table>
+
+  {% include 'pagination.html' with queryset=projects custom_range=custom_range %}
 </div>
+
 
   {% else %}
 
@@ -132,10 +135,10 @@
   </div>
   {% endif %}
 
-
+  
   {% include 'projects/add_modal.html' %}
 
-
+  
 </div>
 
 
