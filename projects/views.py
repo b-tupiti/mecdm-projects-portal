@@ -1,31 +1,28 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import  login_required
 from users.utils import isAdminUser
-from django.shortcuts import redirect
 from requests.models import AccountRequest
 from .models import *
 from entities.models import *
+from .utils import searchProjects, getProjectFilters
+
 
 def Projects(request):
     
     is_admin = isAdminUser(request)
     total_requests = AccountRequest.objects.count()
     
-    projects = Project.objects.all()
-   
-    search_filters = {
-        'donors' :  Donor.objects.all(),
-        'implementors': Implementor.objects.all(),
-        'partners': Partner.objects.all(),
-        'risks': Risk.objects.all(),
-        'types': ProjectType.objects.all(),
-    }
+    search_filters = getProjectFilters()
+    
+    projects, selected = searchProjects(request)
+    
     
     context = {
         'is_admin':is_admin,
         'total_requests':total_requests,
         'projects': projects,
         'search_filters' : search_filters,
+        
+        'selected' : selected,
     }
     
     return render(request,'projects/projects.html', context)

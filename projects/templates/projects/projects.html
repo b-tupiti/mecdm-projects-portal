@@ -72,9 +72,11 @@
         <td><small>{{project.created}}</small></td>
         <td><small class=""><a href="#" class="text-decoration-none"> {{project.title}}</a></small></td>
         {% if request.user.is_authenticated %}
-        <td><small>NDA Secretariet and CFSC preparing reccomendations in preparation of final decision</small></td>
+        <td><small>{{project.status}}</small></td>
         {% endif %}
-        <td><small>Approved by Donor(s)</small></td>
+
+
+        <td><small>{{project.status.category}}</small></td>
         
         <td>
           {%if project.donors.all %}
