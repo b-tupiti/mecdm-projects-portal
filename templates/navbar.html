@@ -25,7 +25,7 @@
 
         <ul class="navbar-nav ms-auto rounded-1 p-0 ps-2 pe-2">
 
-            {% if user.is_authenticated %}
+          {% if request.user.is_authenticated %}
 
                 {% if is_admin %}
                 <li class="nav-item">
@@ -37,14 +37,7 @@
                 
                 {% endif %}
 
-                
-
-              
-
-               
-
             {% endif %}
-         
        
         </ul>
 
