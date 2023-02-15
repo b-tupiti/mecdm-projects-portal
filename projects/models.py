@@ -2,6 +2,7 @@ from django.db import models
 from entities.models import *
 import uuid
 
+
 class Project(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True,null=True)
@@ -29,6 +30,9 @@ class ProjectType(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           primary_key=True, editable=False)
     
+    def natural_key(self):
+        return self.name 
+    
     def __str__(self):
         return self.name
 
@@ -40,6 +44,9 @@ class Risk(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           primary_key=True, editable=False)
+        
+    def natural_key(self):
+        return self.rate + ' - ' + self.description
     
     def __str__(self):
         return self.rate
@@ -52,6 +59,9 @@ class Status(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           primary_key=True, editable=False)
+    
+    def natural_key(self):
+        return self.status 
     
     def __str__(self):
         return self.status
@@ -74,6 +84,9 @@ class Tag(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           primary_key=True, editable=False)
 
+    def natural_key(self):
+        return self.name 
+    
     def __str__(self):
         return self.name
     

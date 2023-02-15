@@ -1,5 +1,6 @@
 from .models import *
 from django.db.models import Q
+import json
 
 def searchProjects(request):
     
@@ -77,9 +78,6 @@ def searchProjects(request):
 
     return projects, selected
 
-
-
-
 def getProjectFilters():
     search_filters = {
         'donors' :  Donor.objects.all(),
@@ -91,3 +89,78 @@ def getProjectFilters():
         'statuses': Status.objects.all(),
     }
     return search_filters
+
+def getDataForExcel():
+    
+    # grab queryset
+    projects = Project.objects.all()
+    
+    # traverse queryset, generate dictionary from each object, append to list
+    projects_list = []
+    for project in projects:
+        projects_list.append(
+            { 
+                'id': str(project.id),
+                'title' : str(project.title),
+                'description' : str(project.description),
+                'risk_rate' : str(project.risk_rate),
+                'type' : str(project.type),
+                'status' : str(project.status),
+                'donors' : ','.join(str(item) for item in [item for item in project.donors.values_list('name', flat=True)]),
+                'implementors' : ','.join(str(item) for item in [item for item in project.implementors.values_list('name', flat=True)]),
+                'partners' : ','.join(str(item) for item in [item for item in project.partners.values_list('name', flat=True)]),
+                'tags' : ','.join(str(item) for item in [item for item in project.tags.values_list('name', flat=True)]),
+            }
+        )
+    
+    # return list 
+    return projects_list
+       
+def createRowItemsFromJSON(data):
+    
+    data = json.loads(data)
+    
+    col_headers = [
+        'Id', 
+        'Title',
+        'Description',
+        'Risk Rate',
+        'Type',
+        'Status',
+        'Donors',
+        'Implementing Agencies',
+        'Partner Organisations\\Acreddited Entites',
+        'Tags'
+        ]
+    
+    project_list = []
+    for project in data:
+        print(project)
+        project_list.append([
+            project['pk'],
+            project['fields']['title'],
+            project['fields']['description'],
+            project['fields']['risk_rate'],
+            project['fields']['type'],
+            project['fields']['status'],
+            ', '.join(item for item in project['fields']['donors']),
+            ', '.join(item for item in project['fields']['implementors']),
+            ', '.join(item for item in project['fields']['partners']),
+            ', '.join(item for item in project['fields']['tags']),
+        ])
+        
+    return col_headers, project_list   
+        
+
+       
+       
+       
+       
+       
+    
+
+    
+    
+    
+    
+    

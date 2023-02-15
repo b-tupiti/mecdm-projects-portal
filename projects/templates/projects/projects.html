@@ -32,18 +32,13 @@
         </form>
 
        
-      <form class="d-inline-block  p-0 m-0 ">
+      <form class="d-inline-block  p-0 m-0 " method="post" action="{% url 'export-projects' %}">
+        {% csrf_token %}
+        <input id="data" type="hidden" name="data" value="{{serialized_projects}}">
        <button class="h-100 btn btn-sm btn-outline-success rounded-0 m-0" type="submit" > <small><span class="me-2 ">Export <span class="fw-bold">Data </span></span><i class="bi bi-file-earmark-excel-fill"></i></small> </button>
        </form>
 
   </div>
-
-
-  
-      
-
-
-
 
 
   <div class="container bg-white p-2 border">
