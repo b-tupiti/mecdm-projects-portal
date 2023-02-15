@@ -1,9 +1,7 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-import pandas as pd
 from openpyxl import Workbook
-from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.utils import get_column_letter
-from openpyxl.styles import colors, fills, PatternFill, Border, Side, Alignment, Protection, Font, GradientFill
+from openpyxl.styles import colors, fills, PatternFill, Border, Side, Alignment, Font
 
 
 def paginateItems(request, objects, results):
