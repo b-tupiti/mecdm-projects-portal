@@ -8,30 +8,76 @@
 
         <h1>{{project.title}}</h1>
         <p class="lead">{{project.description}}</p>
-        <p class="lead">{{project.risk_rate}}</p>
-        <p class="lead">{{project.type}}</p>
-        <p class="lead">{{project.status}}</p>
+        <p class=""> <span class="me-2 fw-bold">Risk Rate</span> <span>{{project.risk_rate}}</span></p>
+        <p class=""><span class="me-2 fw-bold">Project Type</span> <span>{{project.type}}</span></p>
+        <p class=""><span class="me-2 fw-bold">Risk Rate</span> <span>{{project.status}}</span></p>
+        <p class=""><span class="me-2 fw-bold">Governance Type</span> <span>{{project.governance_type}}</span></p>
         <p>
+            <span class="fw-bold me-2">Donors</span>
             {% for donor in project.donors.all %}
-            <span class="small">{{donor}}</span>
+            <span class="small badge bg-dark">{{donor}}</span>
             {% endfor %}
         </p>
 
         <p>
+            <span class="fw-bold me-2">Implementing Agencies</span>
             {% for implementor in project.implementors.all %}
-            <span class="small">{{implementor}}</span>
+            <span class="small badge bg-primary">{{implementor}}</span>
             {% endfor %}
         </p>
 
         <p>
-            {% for partner in project.partners.all %}
-            <span class="small">{{partners}}</span>
-            {% endfor %}
+            <span class="fw-bold me-2">Partners\Accredited Entities</span>
+            {% if project.partners.all %}
+                {% for partner in project.partners.all %}
+                <span class="small badge bg-warning">{{partner}}</span>
+                {% endfor %}
+            {% else %}
+            <span class="small text-dark">no partners\accredited entities</span>
+            {% endif %}
+        </p>
+
+        <p>
+            <span class="fw-bold me-2">Sectors</span>
+            {% if project.sectors.all %}
+                {% for sector in project.sectors.all %}
+                <span class="small">{{sector.name}} ,</span>
+                {% endfor %}
+            {% else %}
+            <span class="small text-dark">no sectors</span>
+            {% endif %}
         </p>
         
-        
-        
+        <p>
+            <span class="fw-bold me-2">Locations</span>
+            {% if project.partners.all %}
+                {% for location in project.locations.all %}
+                <span class="small ">{{location.name}}</span> <a class="btn btn-sm btn-primary">View Google Map</a>
+                {% endfor %}
+            {% else %}
+            <span class="small text-dark">no location specified</span>
+            {% endif %}
+        </p>
 
+        <p class=""> <span class="me-2 fw-bold">Goals and Objectives</span> <span>{{project.goals_objectives}}</span></p>
+        <p class=""> <span class="me-2 fw-bold">Outcomes and Outputs</span> <span>{{project.outcomes_outputs}}</span></p>
+        <p class=""> <span class="me-2 fw-bold">Lessons Learned</span> <span>{{project.lessons_learned}}</span></p>
+        <p class=""> <span class="me-2 fw-bold">Milestones</span> <span>{{project.milestones}}</span></p>
+        <p class=""> <span class="me-2 fw-bold">Financial Notes</span> <span>{{project.financial_notes}}</span></p>
+        <p class=""> <span class="me-2 fw-bold">External Comments</span> <span>{{project.external_comments}}</span></p>
+        <p class=""> <span class="me-2 fw-bold">Internal Comments</span> <span>{{project.internal_comments}}</span></p>
+        <p class=""> <span class="me-2 fw-bold">Status Notes</span> <span>{{project.status_notes}}</span></p>
+        <p class=""> <span class="me-2 fw-bold"> Start Date</span> <span>{{project.start_date}}</span></p>
+        <p class=""> <span class="me-2 fw-bold">Completion Date</span> <span>{{project.completion_date}}</span></p>
+        <p class=""> <span class="me-2 fw-bold">CN Submitted</span> <span>{{project.cn_submitted_date}}</span></p>
+        <p class=""> <span class="me-2 fw-bold">Total Budget</span> <span>{{project.budget_total}}</span></p>
+        <p class=""> <span class="me-2 fw-bold">Co Budget Total</span> <span>{{project.co_budget_total}}</span></p>
+        <p class=""> <span class="me-2 fw-bold">GFMIS Codes</span> <span>{{project.gfmis_codes}}</span></p>
+        <p class=""> <span class="me-2 fw-bold">Total Beneficiaries</span> <span>{{project.num_beneficiaries}}</span></p>
+        <p class=""> <span class="me-2 fw-bold">Tonnes of Co2 avoided</span> <span>{{project.tonnes_co2_avoided}}</span></p>
+        <p class=""> <span class="me-2 fw-bold">Contacts</span> <span>{{project.contacts}}</span></p>
+        
+        
     </div>
 
 </div>
