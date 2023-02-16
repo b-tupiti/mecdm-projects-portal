@@ -4,80 +4,218 @@
 
 <div class="border bg-light"  style="min-height:600px">
 
+   
+
+
+
     <div class="container bg-white p-3 border mt-2">
 
-        <h1>{{project.title}}</h1>
-        <p class="lead">{{project.description}}</p>
-        <p class=""> <span class="me-2 fw-bold">Risk Rate</span> <span>{{project.risk_rate}}</span></p>
-        <p class=""><span class="me-2 fw-bold">Project Type</span> <span>{{project.type}}</span></p>
-        <p class=""><span class="me-2 fw-bold">Risk Rate</span> <span>{{project.status}}</span></p>
-        <p class=""><span class="me-2 fw-bold">Governance Type</span> <span>{{project.governance_type}}</span></p>
-        <p>
-            <span class="fw-bold me-2">Donors</span>
-            {% for donor in project.donors.all %}
-            <span class="small badge bg-dark">{{donor}}</span>
-            {% endfor %}
-        </p>
+        <div class="card bg-white border-0 ">
+            <div class="card-body">
+              <h5 class="card-title fs-3 border-bottom p-3 ">{{project.title}}</h5>
+              <h6 class="card-subtitle mb-2 text-muted p-3">{{project.start_date}} - {{project.completion_date}}</h6>
+             
+              <div class="card border-0" >
 
-        <p>
-            <span class="fw-bold me-2">Implementing Agencies</span>
-            {% for implementor in project.implementors.all %}
-            <span class="small badge bg-primary">{{implementor}}</span>
-            {% endfor %}
-        </p>
+                <div class="row">
+                    <div class="col-6">
+                        <p class=" small text-muted p-3">{{project.description}}</p>
+                    </div>
+                    <div class="col-6">
+                        <h5 class=" fs-5 text-muted ">Locations</h5>
+                        {% if project.locations.all %}
+                        {% for location in project.locations.all %}
+                        <span> {{location.name}} </span> <button class="btn btn-sm btn-primary">See Map <i class="bi bi-geo-alt-fill"></i></button>
+                        {% endfor %}
+                        {% else %}
+                        <span>No locations specified</span>
+                        {% endif %}
+                    </div>
+                </div>
 
-        <p>
-            <span class="fw-bold me-2">Partners\Accredited Entities</span>
-            {% if project.partners.all %}
-                {% for partner in project.partners.all %}
-                <span class="small badge bg-warning">{{partner}}</span>
-                {% endfor %}
-            {% else %}
-            <span class="small text-dark">no partners\accredited entities</span>
-            {% endif %}
-        </p>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"> 
 
-        <p>
-            <span class="fw-bold me-2">Sectors</span>
-            {% if project.sectors.all %}
-                {% for sector in project.sectors.all %}
-                <span class="small">{{sector.name}} ,</span>
-                {% endfor %}
-            {% else %}
-            <span class="small text-dark">no sectors</span>
-            {% endif %}
-        </p>
-        
-        <p>
-            <span class="fw-bold me-2">Locations</span>
-            {% if project.partners.all %}
-                {% for location in project.locations.all %}
-                <span class="small ">{{location.name}}</span> <a class="btn btn-sm btn-primary">View Google Map</a>
-                {% endfor %}
-            {% else %}
-            <span class="small text-dark">no location specified</span>
-            {% endif %}
-        </p>
+                    <div class="row p-3  ">
+                        <div class="col-3  ">
+                            <span class="fw-normal fs-5 me-2">Risk Rate</span> <br>{{project.risk_rate}} 
+                        </div>
+                        <div class="col-3">
+                            <span class="fw-normal fs-5 me-2">Project Type</span><br> {{project.type}} 
+                        </div>
+                        <div class="col-3">
+                            <span class="fw-normal fs-5 me-2">Status</span><br> {{project.status}}
+                        </div>
+                        <div class="col-3">
+                            <span class="fw-normal fs-5 me-2">Governance Type</span><br> {{project.governance_type}}
+                        </div>
+                        <div class="col-3">
+                            <span class="fw-normal fs-5 me-2">GFMIS Code</span><br> {{project.gfmis_codes}}
+                        </div>
+                        <div class="col-3">
+                            <span class="fw-normal fs-5 me-2">CN Submission Date</span><br>{{project.cn_submitted_date}}
+                        </div>
+                        <div class="col-3">
+                            <span class="fw-normal fs-5 me-2">Total Budget (USD)</span> <br>${{project.budget_total}}
+                            
+                        </div>
+                        <div class="col-3">
+                            <span class="fw-normal fs-5 me-2">Co Finance Budget (USD)</span><br> ${{project.co_budget_total}}
+                        </div>
+                    </div>
+                  
+                  
+                  
+                </li>
+                
+                  <li class="list-group-item">
+                    <div class="row p-3">
 
-        <p class=""> <span class="me-2 fw-bold">Goals and Objectives</span> <span>{{project.goals_objectives}}</span></p>
-        <p class=""> <span class="me-2 fw-bold">Outcomes and Outputs</span> <span>{{project.outcomes_outputs}}</span></p>
-        <p class=""> <span class="me-2 fw-bold">Lessons Learned</span> <span>{{project.lessons_learned}}</span></p>
-        <p class=""> <span class="me-2 fw-bold">Milestones</span> <span>{{project.milestones}}</span></p>
-        <p class=""> <span class="me-2 fw-bold">Financial Notes</span> <span>{{project.financial_notes}}</span></p>
-        <p class=""> <span class="me-2 fw-bold">External Comments</span> <span>{{project.external_comments}}</span></p>
-        <p class=""> <span class="me-2 fw-bold">Internal Comments</span> <span>{{project.internal_comments}}</span></p>
-        <p class=""> <span class="me-2 fw-bold">Status Notes</span> <span>{{project.status_notes}}</span></p>
-        <p class=""> <span class="me-2 fw-bold"> Start Date</span> <span>{{project.start_date}}</span></p>
-        <p class=""> <span class="me-2 fw-bold">Completion Date</span> <span>{{project.completion_date}}</span></p>
-        <p class=""> <span class="me-2 fw-bold">CN Submitted</span> <span>{{project.cn_submitted_date}}</span></p>
-        <p class=""> <span class="me-2 fw-bold">Total Budget</span> <span>{{project.budget_total}}</span></p>
-        <p class=""> <span class="me-2 fw-bold">Co Budget Total</span> <span>{{project.co_budget_total}}</span></p>
-        <p class=""> <span class="me-2 fw-bold">GFMIS Codes</span> <span>{{project.gfmis_codes}}</span></p>
-        <p class=""> <span class="me-2 fw-bold">Total Beneficiaries</span> <span>{{project.num_beneficiaries}}</span></p>
-        <p class=""> <span class="me-2 fw-bold">Tonnes of Co2 avoided</span> <span>{{project.tonnes_co2_avoided}}</span></p>
-        <p class=""> <span class="me-2 fw-bold">Contacts</span> <span>{{project.contacts}}</span></p>
-        
-        
+                        
+
+                        <div class="col-4">
+                        <span class="fw-normal fs-5 me-2">Donors</span> <br>
+                        {% for donor in project.donors.all %}
+                        <span class="small ">{{donor}}</span>
+                        {% endfor %}
+                        </div>
+                    
+                        <div class="col-4">
+                        <span class=" fs-5 me-2">Implementing Agencies</span> <br>
+                        {% for implementor in project.implementors.all %}
+                        <span class="small ">{{implementor}}</span>
+                        {% endfor %}
+                        </div>
+
+                        <div class="col-4">
+                        <span class=" fs-5 me-2">Partners\Accredited Entities</span> <br>
+                        {% if project.partners.all %}
+                            {% for partner in project.partners.all %}
+                            <span class="small ">{{partner}}</span>
+                            {% endfor %}
+                        {% else %}
+                        <span class="small  text-dark">no partners\accredited entities</span>
+                        {% endif %}
+                        </div>
+                    </div>
+
+                  </li>
+              
+
+                  <li class="list-group-item">
+                     <div class="accordion" id="accordionPanelsStayOpenExample">
+                    
+                        <div class="accordion-item">
+                        <h2 class="accordion-header" id="go">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{project.id}}go" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                Goals and Objectives
+                            </button>
+                        </h2>
+                        <div id="{{project.id}}go" class="accordion-collapse collapse " aria-labelledby="go">
+                            <div class="accordion-body">
+                            {{project.goals_objectives}}
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{project.id}}ll" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                    Lessons Learned
+                                </button>
+                            </h2>
+                            <div id="{{project.id}}ll" class="accordion-collapse collapse " aria-labelledby="panelsStayOpen-headingOne">
+                                <div class="accordion-body">
+                                {{project.lessons_learned}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{project.id}}fn" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                    Financial Notes
+                                </button>
+                            </h2>
+                            <div id="{{project.id}}fn" class="accordion-collapse collapse " aria-labelledby="panelsStayOpen-headingOne">
+                                <div class="accordion-body">
+                                {{project.financial_notes}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{project.id}}ms" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                    Milestones
+                                </button>
+                            </h2>
+                            <div id="{{project.id}}ms" class="accordion-collapse collapse " aria-labelledby="panelsStayOpen-headingOne">
+                                <div class="accordion-body">
+                                {{project.milestones}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{project.id}}excomment" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                    External Comments
+                                </button>
+                            </h2>
+                            <div id="{{project.id}}excomment" class="accordion-collapse collapse " aria-labelledby="panelsStayOpen-headingOne">
+                                <div class="accordion-body">
+                                {{project.external_comments}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{project.id}}incomment" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                    Internal Comments
+                                </button>
+                            </h2>
+                            <div id="{{project.id}}incomment" class="accordion-collapse collapse " aria-labelledby="panelsStayOpen-headingOne">
+                                <div class="accordion-body">
+                                {{project.internal_comments}}
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{project.id}}notes" aria-expanded="true" aria-controls="{{project.id}}notes">
+                                    Status Notes
+                                </button>
+                            </h2>
+                            <div id="{{project.id}}notes" class="accordion-collapse collapse " aria-labelledby="panel">
+                                <div class="accordion-body">
+                                {{project.status_notes}}
+                                </div>
+                            </div>
+                            </div>
+
+                           
+                            
+
+                    </div>
+                 </li>
+
+               
+                 
+                </ul>
+
+                
+
+              </div>
+
+              
+
+             
+            </div>
+          </div>
+
     </div>
 
 </div>
