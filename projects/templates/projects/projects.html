@@ -62,7 +62,7 @@
       {% for project in projects %}
       
       <tr>
-        <td><small class=""><a href="#" class="text-decoration-none"> {{project.title}}</a></small></td>
+        <td><small class=""><a href="{% url 'project' project.id %}" class="text-decoration-none"> {{project.title}}</a></small></td>
         {% if request.user.is_authenticated %}
         <td><small>{{project.status}}</small></td>
         {% endif %}

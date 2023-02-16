@@ -35,6 +35,12 @@ def Projects(request):
 
 
 
+def SingleProject(request, pk):
+    project = Project.objects.get(id=pk)
+    context = {'project':project}
+    return render(request,'projects/project.html', context)
+
+
 def ExportProjects(request):
     
     if request.method == "POST":

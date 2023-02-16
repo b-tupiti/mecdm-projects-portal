@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="border bg-light"  style="min-height:600px">
+
+    <div class="container bg-white p-3 border mt-2">
+
+        <h1>{{project.title}}</h1>
+        <p class="lead">{{project.description}}</p>
+        <p class="lead">{{project.risk_rate}}</p>
+        <p class="lead">{{project.type}}</p>
+        <p class="lead">{{project.status}}</p>
+        <p>
+            {% for donor in project.donors.all %}
+            <span class="small">{{donor}}</span>
+            {% endfor %}
+        </p>
+
+        <p>
+            {% for implementor in project.implementors.all %}
+            <span class="small">{{implementor}}</span>
+            {% endfor %}
+        </p>
+
+        <p>
+            {% for partner in project.partners.all %}
+            <span class="small">{{partners}}</span>
+            {% endfor %}
+        </p>
+        
+        
+        
+
+    </div>
+
+</div>
+
+{% endblock %}
