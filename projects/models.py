@@ -7,11 +7,33 @@ import uuid
 class Project(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True,null=True)
+    goals_objectives = models.TextField(blank=True,null=True)
+    outcomes_outputs = models.TextField(blank=True,null=True)
+    lessons_learned = models.TextField(blank=True,null=True)
+    financial_notes = models.TextField(blank=True,null=True)
+    milestones = models.TextField(blank=True,null=True)
+    
+    internal_comments = models.TextField(blank=True,null=True)
+    external_comments = models.TextField(blank=True,null=True)
+    status_notes = models.TextField(blank=True,null=True)
+    
+    start_date = models.DateField(blank=True,null=True)
+    completion_date = models.DateField(blank=True,null=True)
+    cn_submitted_date = models.DateField(blank=True,null=True)
+    
+    budget_total = models.DecimalField(max_digits=20,decimal_places=2,blank=True,null=True)
+    co_budget_total = models.DecimalField(max_digits=20,decimal_places=2,blank=True,null=True)
     
     risk_rate = models.ForeignKey('Risk', null=True, blank=True, on_delete=models.SET_NULL)
     type = models.ForeignKey('ProjectType', null=True, blank=True, on_delete=models.SET_NULL)
     status = models.ForeignKey('Status', null=True, blank=True, on_delete=models.SET_NULL)
     scope = models.ForeignKey('Scope', null=True, blank=True, on_delete=models.SET_NULL)
+    
+    gfmis_codes = models.CharField(max_length=100, blank=True, null=True)
+    num_beneficiaries = models.IntegerField(blank=True, null=True)
+    tonnes_co2_avoided = models.IntegerField(blank=True, null=True)
+    
+    contacts = models.TextField(null=True,blank=True)
     
     donors = models.ManyToManyField(Donor, verbose_name="Donor Agencies",  blank=True)
     implementors = models.ManyToManyField(Implementor, verbose_name="Implementing Agencies", blank=True)
