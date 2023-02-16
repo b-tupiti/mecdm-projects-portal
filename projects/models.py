@@ -1,5 +1,6 @@
 from django.db import models
 from entities.models import *
+from govsect.models import *
 import uuid
 
 
@@ -17,6 +18,9 @@ class Project(models.Model):
     partners = models.ManyToManyField(Partner, verbose_name="Accreditted Entities\\Partner Organizations",  blank=True)
     locations = models.ManyToManyField('Location', verbose_name="Project Locations",  blank=True)
     tags = models.ManyToManyField("Tag", blank=True)
+    
+    governance_type = models.ForeignKey(GovernanceType, verbose_name="Government or Non-government", null=True, on_delete=models.SET_NULL)
+    sectors = models.ManyToManyField(Sector)
     
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True,
