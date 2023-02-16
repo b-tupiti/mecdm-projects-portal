@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'requests.apps.RequestsConfig',
     'projects.apps.ProjectsConfig',
     'entities.apps.EntitiesConfig',
+    'govsect.apps.GovsectConfig',
 ]
 
 MIDDLEWARE = [
