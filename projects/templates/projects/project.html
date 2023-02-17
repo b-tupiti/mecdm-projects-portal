@@ -22,14 +22,33 @@
                         <p class=" small text-muted p-3">{{project.description}}</p>
                     </div>
                     <div class="col-6">
-                        <h5 class=" fs-5 text-muted ">Locations</h5>
-                        {% if project.locations.all %}
-                        {% for location in project.locations.all %}
-                        <span> {{location.name}} </span> <button class="btn btn-sm btn-primary">See Map <i class="bi bi-geo-alt-fill"></i></button>
-                        {% endfor %}
-                        {% else %}
-                        <span>No locations specified</span>
-                        {% endif %}
+                        
+                        
+                            <p >
+                                <h5 class=" fs-5 text-muted ">Locations</h5>
+                                {% if project.locations.all %}
+                                {% for location in project.locations.all %}
+                                <span> {{location.name}} </span> <button class="btn btn-sm btn-primary">See Map <i class="bi bi-geo-alt-fill"></i></button>
+                                {% endfor %}
+                                {% else %}
+                                <span>No locations specified</span>
+                                {% endif %}
+                            </p>
+
+                            <p >
+                                <h5 class=" fs-5 text-muted ">Documents</h5>
+                                {% if documents %}
+                                    {% for document in documents %}
+                                    
+                                
+                                    <span class="me-3"> <a href="{{document.file.url}}"  class="text-decoration-none" download> {{document}} <i class="bi bi-file-earmark-pdf-fill text-danger"></i></a></span> 
+                                    {% endfor %}
+                                {% else %}
+                                    <span class="text-muted">This project does not have documents.</span>
+                                {% endif %}
+                            </p>
+                        
+
                     </div>
                 </div>
 

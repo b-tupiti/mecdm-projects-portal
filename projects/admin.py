@@ -37,3 +37,7 @@ admin.site.register(Location,LocationAdmin)
 class ScopeAdmin(admin.ModelAdmin):
     pass
 admin.site.register(Scope,ScopeAdmin)
+
+class DocumentAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(Document,DocumentAdmin)

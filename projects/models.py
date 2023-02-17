@@ -5,7 +5,7 @@ import uuid
 
 
 class Project(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, unique=True)
     description = models.TextField(blank=True,null=True)
     goals_objectives = models.TextField(blank=True,null=True)
     outcomes_outputs = models.TextField(blank=True,null=True)
@@ -147,3 +147,17 @@ class Location(models.Model):
     
     def __str__(self):
         return self.name
+    
+    
+    
+class Document(models.Model):
+    
+    file = models.FileField(upload_to='documents/')
+    project = models.ForeignKey(Project, to_field='title', on_delete=models.CASCADE, null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True,
+                          primary_key=True, editable=False)
+    
+    def __str__(self):
+        filename = self.file.name.split('/')[-1]
+        return filename

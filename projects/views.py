@@ -36,8 +36,15 @@ def Projects(request):
 
 
 def SingleProject(request, pk):
+    
     project = Project.objects.get(id=pk)
-    context = {'project':project}
+    documents = Document.objects.filter(project=project)
+    
+    context = {
+        'project':project,
+        'documents': documents,
+    }
+    
     return render(request,'projects/project.html', context)
 
 
