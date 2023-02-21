@@ -19,6 +19,7 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ['mecdm-projects.up.railway.app','localhost']
+CSRF_TRUSTED_ORIGINS = ['https://mecdm-projects.up.railway.app']
 
 
 # Application definition
