@@ -1,4 +1,5 @@
 from pathlib import Path
+from distutils.util import strtobool
 import environ
 
 
@@ -16,7 +17,10 @@ environ.Env.read_env()
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+
+DEBUG = bool(strtobool(env('DEBUG')))
+
 
 ALLOWED_HOSTS = ['mecdm-projects.up.railway.app','127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://mecdm-projects.up.railway.app']
