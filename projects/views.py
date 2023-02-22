@@ -4,8 +4,8 @@ from requests.models import AccountRequest
 from .models import *
 from entities.models import *
 from .utils.search import searchProjects
-from .utils.generator import generateReport, createRowItemsFromJson, generateSingleSpreadsheet
-from .utils.filter import getProjectFilters, filterProjectsForReport
+from .utils.generator import generateReport, createRowItemsFromJson, generateSingleSpreadsheet, filterProjectsForReport
+from .utils.filter import getProjectFilters
 from utils.utils import paginateItems
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
@@ -30,6 +30,7 @@ def Projects(request):
         
         'selected' : selected,
         
+        # serializing the filtered projects so that it can be returned via a post request from either the Generate Report or Extract Data buttons
         'serialized_projects' : serializers.serialize('json', filtered_projects,  use_natural_foreign_keys=True),
     }
     
