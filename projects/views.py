@@ -4,9 +4,9 @@ from requests.models import AccountRequest
 from .models import *
 from entities.models import *
 from .utils.search import searchProjects
-from .utils.generator import generateReport, createRowItemsFromJson
+from .utils.generator import generateReport, createRowItemsFromJson, generateSingleSpreadsheet
 from .utils.filter import getProjectFilters, filterProjectsForReport
-from utils.utils import paginateItems, generateSingleSpreadsheet
+from utils.utils import paginateItems
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 
