@@ -6,4 +6,5 @@ urlpatterns = [
     path('project/<str:pk>/', views.SingleProject, name='project'),
     
     path('export-projects/', views.ExportProjects, name='export-projects'),
+    path('generate-report/', views.GenerateReport, name='generate-report'),
 ]

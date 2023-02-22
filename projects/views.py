@@ -5,7 +5,7 @@ from .models import *
 from entities.models import *
 from .utils import *
 from utils.utils import paginateItems, generateSingleSpreadsheet
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 
 def Projects(request):
@@ -65,8 +65,38 @@ def ExportProjects(request):
             items,                  
             col_titles,             
         )
-
+        
         return response
     
     else:
         return redirect('projects')
+
+
+
+def GenerateReport(request):
+    
+    if request.method == "POST":
+        
+        if request.POST.get('generate-report'):
+            
+            # the type of report to be generated and the projects to generate report for
+            report_type = request.POST.get('generate-report')
+            data = request.POST.get('data')
+            
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="report.xls"'
+            
+            results = filterProjectsForReport(data, report_type)
+            
+            generateReport(
+                results,
+                response,
+            )
+            
+            return response
+            
+        else:
+            return HttpResponse('<p>Select a category for generating reports in the dropdown </p>')
+        
+    return redirect('projects')
+   
