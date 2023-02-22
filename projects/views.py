@@ -3,7 +3,9 @@ from users.utils import isAdminUser
 from requests.models import AccountRequest
 from .models import *
 from entities.models import *
-from .utils import *
+from .utils.search import searchProjects
+from .utils.generator import generateReport, createRowItemsFromJson
+from .utils.filter import getProjectFilters, filterProjectsForReport
 from utils.utils import paginateItems, generateSingleSpreadsheet
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
@@ -57,7 +59,7 @@ def ExportProjects(request):
 
         data = request.POST.get('data')
         
-        items, col_titles = createRowItemsFromJSON(data)
+        items, col_titles = createRowItemsFromJson(data)
         
         generateSingleSpreadsheet(
             response,               
