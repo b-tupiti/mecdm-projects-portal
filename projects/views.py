@@ -101,7 +101,7 @@ def GenerateReport(request):
         if request.POST.get('filter_group'):
 
             data = request.POST.get('data', None)
-            if data is not None:
+            if not data:
                 
                 # get POST data
                 filter_group = request.POST.get('filter_group')
