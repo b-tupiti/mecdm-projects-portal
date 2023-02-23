@@ -100,11 +100,12 @@ def GenerateReport(request):
         
         if request.POST.get('filter_group'):
 
-            if request.POST.get('data') is not None:
+            data = request.POST.get('data', None)
+            if data is not None:
                 
                 # get POST data
                 filter_group = request.POST.get('filter_group')
-                projects = json.loads(request.POST.get('data'))
+                projects = json.loads(data)
                 
                 # prepare data
                 data = prepareDataForReport(filter_group, projects)
