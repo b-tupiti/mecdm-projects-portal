@@ -6,40 +6,7 @@ from config import settings
 import datetime
 import json
 
-def createRowItemsFromJson(data):
-    
-    data = json.loads(data)
-    
-    col_headers = [
-        'Id', 
-        'Title',
-        'Description',
-        'Risk Rate',
-        'Type',
-        'Status',
-        'Donors',
-        'Implementing Agencies',
-        'Partner Organisations\\Acreddited Entites',
-        'Tags'
-        ]
-    
-    project_list = []
-    for project in data:
-        print(project)
-        project_list.append([
-            project['pk'],
-            project['fields']['title'],
-            project['fields']['description'],
-            project['fields']['risk_rate'],
-            project['fields']['type'],
-            project['fields']['status'],
-            ', '.join(item for item in project['fields']['donors']),
-            ', '.join(item for item in project['fields']['implementors']),
-            ', '.join(item for item in project['fields']['partners']),
-            ', '.join(item for item in project['fields']['tags']),
-        ])
-        
-    return col_headers, project_list
+
 
 
 def generateSingleSpreadsheet(response,sheet_name, col_headers, row_items):
@@ -98,14 +65,112 @@ def applyDefaultStyle(ws, col_headers):
         ws[char+'2'].fill = header_fill
         
 
-def generateReport(results, response):
+def generateReport(report_option, results, response):
     
     wb = Workbook()
+    
+    # Summary Report Sheet
+    createSummaryReportSheet(report_option, wb, results)
+   
+    # Projects by filter Sheet
+    createProjectsByFilterSheet(report_option, wb, results)
+    
+    wb.save(response)
+
+
+
+def createProjectsByFilterSheet(report_option, wb, projects):
+    
+    wb.create_sheet('Projects By ' + report_option)
+    ws = wb['Projects By ' + report_option]   
+    
+
+    # styles
+    header_font = Font(name='Arial Narrow', color=colors.Color('1F497D'),size=15,bold=True)    
+    header_fill = fills.PatternFill(patternType='solid',
+                                  fgColor=colors.WHITE)
+    title_font = Font(name='Arial Narrow', color=colors.WHITE,size=14,bold=True)    
+    title_fill = fills.PatternFill(patternType='solid',
+                                  fgColor=colors.Color('4F81BD'))
+    cell_font = Font(name='Arial Narrow', color=colors.BLACK,size=11,bold=False)    
+    cell_fill = fills.PatternFill(patternType='solid',
+                                  fgColor=colors.Color('DCE6F1'))
+    cell_border = Border(left=Side(style='thin'), 
+                         right=Side(style='thin'), 
+                         top=Side(style='thin'), 
+                         bottom=Side(style='thin'))
+    align_cell_right = Alignment(horizontal="right",vertical="center")
+    align_cell_left = Alignment(horizontal="left",vertical="center")
+    
+    
+    # setting cell width for columns A & B
+    for column in range(1,3):
+        column = get_column_letter(column)
+        ws.column_dimensions[column].width = 30 
+    
+    
+    for project in projects:
+        
+        # append header row
+        ws.append([project.get('filtered_by'),''])
+        
+        # merge that row
+        ws.merge_cells('A' + str(ws.max_row)+':B'+str(ws.max_row))
+        
+        # style that row
+        ws['A'+str(ws.max_row)].font = header_font
+        ws['A'+str(ws.max_row)].fill = header_fill
+        
+        # append title row
+        ws.append(['Project','Funding'])
+
+        # style title
+        
+        ws['A'+str(ws.max_row)].font = title_font
+        ws['A'+str(ws.max_row)].fill = title_fill
+        
+        ws['B'+str(ws.max_row)].font = title_font
+        ws['B'+str(ws.max_row)].fill = title_fill
+        ws['B'+str(ws.max_row)].alignment = align_cell_right
+        
+        
+        for item in project['projects']:
+            project = item['fields']
+            
+            # append cell row
+            ws.append([project.get('title'),float(project.get('budget_total'))])
+            
+            # style cell row
+            
+            ws['A'+str(ws.max_row)].font = cell_font
+            ws['A'+str(ws.max_row)].fill = cell_fill
+            ws['A'+str(ws.max_row)].border = cell_border
+            
+            ws['B'+str(ws.max_row)].font = cell_font
+            ws['B'+str(ws.max_row)].fill = cell_fill
+            ws['B'+str(ws.max_row)].border = cell_border
+            ws['B'+str(ws.max_row)].number_format = numbers.FORMAT_CURRENCY_USD_SIMPLE
+            
+        # append empty row for spacing   
+        ws.append(['',''])
+    
+    # styleProjectsSheet(ws)
+    
+    insertDate(ws)
+
+
+
+# def styleProjectsSheet(ws):
+
+
+
+def createSummaryReportSheet(report_option, wb, results):
+    
     ws = wb.active
-    ws.title = 'Report'
+    ws.title = 'Summary Report'
 
     column_titles = [
-        'Donor', 
+        report_option, 
         'Number of Projects',
         'Total Funding',
         ]
@@ -114,7 +179,7 @@ def generateReport(results, response):
     
     for item in results:
         ws.append([
-            item.get('name'),
+            item.get('filtered_by'),
             item.get('project_count'),
             item.get('total_funding')
             ])
@@ -123,6 +188,16 @@ def generateReport(results, response):
         
     applyReportStyling(column_titles, ws)
     
+    insertDate(ws)
+    
+    
+    
+    
+    
+    
+    
+def insertDate(ws):
+      
     # add date row to the bottom, add styles
     date_row = str(ws.max_row+2)
     
@@ -140,7 +215,8 @@ def generateReport(results, response):
     ws['A'+date_row].font = Font(name='Arial Narrow',color=colors.Color('1F497D'),size=11,bold=True)
     ws['A'+date_row].alignment = Alignment(horizontal='right')
     
-    wb.save(response)
+    
+    
     
     
 # Styling for Generated Reports
@@ -180,7 +256,7 @@ def applyReportStyling(col_headers,ws):
     # creating the header
     ws.insert_rows(1, amount=4)
     ws.merge_cells("A1:C4")
-    ws['A1'].value = 'Generate Report By Donor for filtered Projects'
+    ws['A1'].value = 'Summary Report'
     ws['A1'].border = thin_border
     ws['A1'].font = Font(name='Arial Narrow',color=font_color,size=11,bold=True) 
     ws['A1'].fill = default_fill
@@ -211,35 +287,69 @@ def applyReportStyling(col_headers,ws):
         ws[col_letter+str(ws.max_row)].font = Font(name='Arial Narrow',color=font_color,size=16,bold=True)
         
         
-def filterProjectsForReport(data, report_type):
+def filterForReportType(report_option, projects):
     
-    projects = json.loads(data)
-    
-    # grab donors from each project
-    donors_lists = [project['fields']['donors'] for project in projects]  
+    # handles the report_option 'status'. status key is a list [status, status_category], this grabs the status_category
+    if report_option == 'status':
+         items = [project['fields'][report_option][1] for project in projects]
+    # handles report_option keys 'donors' and 'implementors'   
+    else:
+        items_lists = [project['fields'][report_option] for project in projects]
+        items = []
+        for _list in items_lists:
+            items.extend(_list)
 
-    # extend all donors list to a donors list so that it becomes a list of strings
-    donors = []
-    for _list in donors_lists:
-        donors.extend(_list)
+    # removes duplicate items 
+    items = list(set(items))
+    
+    
+    objs = [{'filtered_by': item, 'project_count': 0, 'total_funding': 0, 'projects': []} for item in items]
 
-    # remove duplicate donors
-    donors = list(set(donors))
     
-    donor_objs = []
-    for donor in donors:
-        donor_objs.append({
-            'name': donor,
-            'project_count': 0,
-            'total_funding': 0,
-        })
-    
-    
+    # loops through each project, get all projects that match filter,
     for project in projects:
-        for donor in donor_objs:
-            if donor.get('name') in project['fields']['donors']:
-                donor['project_count'] = donor.get('project_count') + 1
+        for obj in objs:
+            if obj.get('filtered_by') in project['fields'][report_option]:
+                obj['projects'].append(project)
+                obj['project_count'] = obj.get('project_count') + 1
                 if project['fields']['budget_total']:
-                    donor['total_funding'] = donor.get('total_funding') + float(project['fields']['budget_total'])
+                    obj['total_funding'] = obj.get('total_funding') + float(project['fields']['budget_total'])
     
-    return donor_objs
+    return objs
+
+
+
+def createRowItemsFromJson(data):
+    
+    data = json.loads(data)
+    
+    col_headers = [
+        'Id', 
+        'Title',
+        'Description',
+        'Risk Rate',
+        'Type',
+        'Status',
+        'Donors',
+        'Implementing Agencies',
+        'Partner Organisations\\Acreddited Entites',
+        'Tags'
+        ]
+    
+    project_list = []
+    for project in data:
+        print(project)
+        project_list.append([
+            project['pk'],
+            project['fields']['title'],
+            project['fields']['description'],
+            project['fields']['risk_rate'],
+            project['fields']['type'],
+            project['fields']['status'],
+            ', '.join(item for item in project['fields']['donors']),
+            ', '.join(item for item in project['fields']['implementors']),
+            ', '.join(item for item in project['fields']['partners']),
+            ', '.join(item for item in project['fields']['tags']),
+        ])
+        
+    return col_headers, project_list

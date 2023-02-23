@@ -23,11 +23,11 @@
         <form class="d-inline-block p-0  m-0" method="post" action="{% url 'generate-report' %}">
           {% csrf_token %}
           <input id="data" type="hidden" name="data" value="{{serialized_projects}}">
-             <select name="generate-report" style="width:200px" class="h-100 d-inline-block form-select  rounded-0 shadow-none p-1 m-0" aria-label=".form-select-sm example">
+             <select name="filter_group" style="width:200px" class="h-100 d-inline-block form-select  rounded-0 shadow-none p-1 m-0" aria-label=".form-select-sm example">
               <option ></option>
-              <option value="by_donor">By Donor</option>
-              <option value="by_category">By Status Category</option>
-              <option value="by_implementor">By Implementing Agencies</option>
+              <option value="{{report_by.donors}}">By Donor</option>
+              <option value="{{report_by.implementors}}">By Implementing Agencies</option>
+              <option value="{{report_by.status}}">By Status Category</option>
             </select> 
 
             <button class="h-100  btn btn-sm btn-outline-success rounded-0 m-0  " type="submit" > <small><span class="me-2 ">Generate <span class="fw-bold">Report </span></span><i class="bi bi-clipboard-data-fill"></i></small> </button>
