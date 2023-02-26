@@ -5,12 +5,12 @@
 
 {% block content %}
 
-<div class="border bg-light"  style="min-height:600px">
+<div class=" bg-dark"  style="min-height:600px">
 
 
  
  
-  {% include 'projects/projects_navbar.html' %}
+  {% include 'projects/projects_filterbar.html' %}
 
   {% if projects %}
 
@@ -22,7 +22,7 @@
   <div class="container bg-white p-2 border">
   <table class="table table-hover table  table-sm  border ">
     <thead class="thead-light  " >
-      <tr >
+      <tr class="mb-1">
         <th scope="col">Title</th>
         {% if request.user.is_authenticated %}
         <th scope="col">Project Status</th>

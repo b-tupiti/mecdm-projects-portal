@@ -1,0 +1,160 @@
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'projects/styles/main.css' %}"></link>
+
+
+<!-- New Filter Panel-->
+<div class="position-relative m-0 p-3 " style="background:#2c3136">
+<form class="text-white p-0 m-0 " >
+  <div class=" pb-3 row m-0">
+    <div class="col-6 col-sm-4 col-md-3 col-lg-3 col-xl-4">
+      <div class="p-1"><small> Keywords</small></div>
+      <input
+        class="form-control form-control-sm rounded-end-0 border-0 border-bottom shadow-none"
+        type="text"
+        placeholder="title, description"
+        name="keywords"
+        value="{{selected.keywords}}"
+      />
+    </div>
+
+    <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+      <div class="p-1"><small> Tags</small></div>
+      <input
+        class="form-control form-control-sm rounded-start-0 border-0 border-bottom shadow-none"
+        type="text"
+        placeholder="eg. complex"
+        name="tags"
+        value="{{selected.tags}}"
+      />
+    </div>
+
+    <div class="col-sm-4 col-md-3 col-xl-3">
+      <div class="p-1"><small> Status</small></div>
+      <select
+        name="status"
+        class="form-select form-select-sm rounded-0 shadow-none"
+        aria-label=".form-select-sm example"
+      >
+        <option></option>
+        {% for status in search_filters.statuses %}
+        <option value="{{status}}" {% if status.status == selected.selected_status %} selected {% endif %}>{{status}}</option>
+        {% endfor %}
+        
+      </select>
+    </div>
+
+    <div class="col-sm-4 col-md-3 col-xl-3">
+      <div class="p-1"><small> Category</small></div>
+      <select
+        name="category"
+        class="form-select form-select-sm rounded-0 shadow-none"
+        aria-label=".form-select-sm example"
+      >
+      <option></option>
+      {% for category in search_filters.categories %}
+      <option value="{{category}}" {% if selected.selected_category == category.name %}selected{% endif %}>{{category}}</option>
+      {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-sm-4 col-md-2 col-lg-2 col-xl-2">
+      <div class="p-1"><small> Donor</small></div>
+      <select
+        name="donor"
+        class="form-select form-select-sm rounded-0 shadow-none"
+        aria-label=".form-select-sm example"
+      >
+      <option ></option>
+      {% for donor in search_filters.donors %}
+      <option value="{{donor}}" {%if selected.selected_donor == donor.name %}selected{% endif %}>{{donor}}</option>
+      {% endfor %}
+      
+      </select>
+    </div>
+
+    <div class="col-sm-4 col-md-3 col-lg-2 col-xl-2">
+      <div class="p-1"><small> Implementor</small></div>
+      <select
+        name="implementor"
+        class="form-select form-select-sm rounded-0 shadow-none"
+        aria-label=".form-select-sm example"
+      >
+      <option></option>
+      {% for implementor in search_filters.implementors %}
+      <option value="{{implementor}}" {% if selected.selected_implementor == implementor.name %} selected {% endif %}>{{implementor}}</option>
+      {% endfor %}
+      
+      </select>
+    </div>
+
+    <div class="col-sm-4 col-md-2 col-xl-2">
+      <div class="p-1"><small> Partner</small></div>
+      <select
+        name="partner"
+        class="form-select form-select-sm rounded-0 shadow-none"
+        aria-label=".form-select-sm example"
+      >
+      <option></option>
+      {% for partner in search_filters.partners %}
+      <option value="{{partner}}" {% if selected.selected_partner == partner.name %} selected {% endif %}>{{partner}}</option>
+      {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-sm-4 col-md-3 col-lg-3 col-xl-3">
+      <div class="p-1"><small> Type</small></div>
+      <select
+        name="type"
+        class="form-select form-select-sm rounded-0 shadow-none"
+        aria-label=".form-select-sm example"
+      >
+      <option></option>
+      {% for type in search_filters.types %}
+      <option value="{{type}}" {% if type.name == selected.selected_type %} selected {% endif %} >{{type}}</option>
+      {% endfor %}
+     
+      </select>
+    </div>
+
+    <div class="col-sm-4 col-md-2 col-lg-3 col-xl-3">
+      <div class="p-1"><small> Risk</small></div>
+      <select
+        name="risk"
+        class="form-select form-select-sm rounded-0 shadow-none"
+        aria-label=".form-select-sm example"
+      >
+      <option ></option>
+      {% for risk in search_filters.risks %}
+      <option value="{{risk}}" {% if selected.selected_risk == risk.rate %} selected {% endif %}>{{risk.description}}</option>
+      {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div class="  d-flex flex-row-reverse p-2 pe-3">
+  <button
+      class="btn btn-sm btn-success rounded-0 bottom-0 end-0"
+      type="submit"
+    >
+      <small
+        ><span class="me-2"
+          >Find <span class="fw-bold">projects </span></span
+        ><i class="bi bi-binoculars-fill"></i
+      ></small>
+    </button>
+  </div>
+
+</form>
+
+{% include 'projects/generate_export.html' %}
+{% comment %} {% include 'projects/generate_export_mobile.html' %} {% endcomment %}
+
+
+
+</div>
+
+<!-- end filter panel -->
+
+
