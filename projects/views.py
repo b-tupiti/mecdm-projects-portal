@@ -65,6 +65,9 @@ def SingleProject(request, pk):
     return render(request,'projects/project.html', context)
 
 
+
+
+
 def ExportProjects(request):
     
     if request.method == "POST":
@@ -100,12 +103,12 @@ def GenerateReport(request):
         
         if request.POST.get('filter_group'):
 
-            data = request.POST.get('data', None)
-            if not data:
+            
+            if request.POST.get('data') != "[]":
                 
                 # get POST data
                 filter_group = request.POST.get('filter_group')
-                projects = json.loads(data)
+                projects = json.loads(request.POST.get('data'))
                 
                 # prepare data
                 data = prepareDataForReport(filter_group, projects)
